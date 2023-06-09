@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Typography, Grid, Paper, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from "react-router-dom";
+
 
 const FindCandidates = ({ baseUrl }) => {
   const [jobseeker, setJobseeker] = useState([]);
@@ -18,7 +18,7 @@ const FindCandidates = ({ baseUrl }) => {
  
 
   // Fetch all the job seekers, users, and resumes
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [jobseekerResponse, userResponse, resumeResponse] = await Promise.all([
         axios.get(`${baseUrl}/api/jobseekers`),
@@ -39,11 +39,12 @@ const FindCandidates = ({ baseUrl }) => {
       setIsLoading(false);
       setError(error.message);
     }
-  };
+  
+}, [baseUrl]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   // Apply filter to find the perfect skill match
   const handleFilterChange = (event) => {
