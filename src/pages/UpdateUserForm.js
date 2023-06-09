@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -20,7 +20,7 @@ const UpdateUserForm = ({ baseUrl }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   // Fetch the user
-  const fetchUser = async () => {
+  const fetchUser = useCallback( async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/user/${userId}`);
       const data = response.data;
@@ -28,11 +28,11 @@ const UpdateUserForm = ({ baseUrl }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [baseUrl, userId]);
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   console.log('user is ', user);
 

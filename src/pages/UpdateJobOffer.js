@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 import { useParams } from "react-router-dom";
 import { TextField } from "@mui/material";
 import Container from "@mui/material/Container";
@@ -17,7 +17,7 @@ const UpdateJobOffer = ({ baseUrl }) => {
     const [jobRequirements, setJobRequirements] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [employer, setEmployer] = useState({});
-    const navigate = useNavigate();
+
     const userType = localStorage.getItem("user_type");
     const employerId = localStorage.getItem("employer_id");
   
@@ -41,7 +41,7 @@ const UpdateJobOffer = ({ baseUrl }) => {
         }
       };
       fetchJobListing();
-    }, [baseUrl, id]);
+    }, [baseUrl, employerId, id]);
 
     console.log(employer);
   

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import {
@@ -22,7 +22,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+
 
 const CandidatePageDetail = ({ baseUrl }) => {
   const { id } = useParams();
@@ -35,7 +35,7 @@ const CandidatePageDetail = ({ baseUrl }) => {
   const employerId = localStorage.getItem("employer_id");
 
   // Fetch user data
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/user/${id}`);
       const data = response.data;
@@ -43,16 +43,17 @@ const CandidatePageDetail = ({ baseUrl }) => {
     } catch (error) {
       console.log(error);
       setError(error.message);
+
       setIsLoading(false);
     }
-  };
+  }, [baseUrl, id]);
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [fetchUser]);
 
   // Fetch jobseeker data
-  const fetchJobseeker = async () => {
+  const fetchJobseeker = useCallback(async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/jobseekers/`);
       const data = response.data;
@@ -66,16 +67,16 @@ const CandidatePageDetail = ({ baseUrl }) => {
       setError(error.message);
       setIsLoading(false);
     }
-  };
+  }, [baseUrl, user]);
 
   useEffect(() => {
     if (user.id) {
       fetchJobseeker();
     }
-  }, [user]);
+  }, [user, fetchJobseeker]);
 
   // Fetch resume data
-  const fetchResume = async () => {
+  const fetchResume = useCallback(async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/resume/`);
       const data = response.data;
@@ -89,13 +90,13 @@ const CandidatePageDetail = ({ baseUrl }) => {
       setError(error.message);
       setIsLoading(false);
     }
-  };
+  }, [baseUrl, jobseeker]);
 
   useEffect(() => {
     if (jobseeker.id) {
       fetchResume();
     }
-  }, [jobseeker]);
+  }, [jobseeker, fetchResume]);
 
   //Save candidate profile
   //Save candidate to favorites
@@ -114,10 +115,14 @@ const CandidatePageDetail = ({ baseUrl }) => {
   };
 
   // Render the candidate page details
+  
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       {isLoading ? (
         <CircularProgress />
+      ) :  error ? (
+        <div>Error: {error}</div>
       ) : (
         <>
           <Paper style={{ padding: 20, marginBottom: 20, height: "100%", textTransform:'uppercase' }}>

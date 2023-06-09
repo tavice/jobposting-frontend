@@ -16,7 +16,7 @@ const NewJobListingForm = ({ baseUrl }) => {
   const [jobRequirements, setJobRequirements] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
-  const [employers, setEmployers] = useState([]);
+ 
   const [employer, setEmployer] = useState([]);
 
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const NewJobListingForm = ({ baseUrl }) => {
       }
     };
     fetchEmployer();
-  }, [employerId]);
+  }, [baseUrl, employerId]);
 
   console.log(employer);
   //================================================================//

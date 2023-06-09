@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import Typography from "@mui/material/Typography";
+import { useState, useEffect, useCallback } from "react";
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
@@ -19,7 +19,7 @@ const Resume = ({ baseUrl }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchResumes = async () => {
+  const fetchResumes = useCallback(async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/resume`);
       const data = response.data;
@@ -33,11 +33,11 @@ const Resume = ({ baseUrl }) => {
       setError(error.message);
       setIsLoading(false);
     }
-  };
+  }, [baseUrl, jobSeekerId]);
 
   useEffect(() => {
     fetchResumes();
-  }, []);
+  }, [fetchResumes]);
 
   if (isLoading) {
     return <div>Loading...</div>;

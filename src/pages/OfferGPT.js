@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, Typography, Grid, Paper } from "@mui/material";
+import { Button, Typography,  Paper } from "@mui/material";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import SendIcon from '@mui/icons-material/Send';
@@ -41,7 +41,7 @@ const OfferGPT = ({ baseUrl }) => {
       if (response.status === 200) {
         // Access the response data
         const data = response.data;
-        const { messages: updatedMessages, formattedResponse } = data;
+        const { messages:  formattedResponse } = data;
 
         // Update the messages state with the updated messages
         setMessages((prevMessages) => {
@@ -85,11 +85,11 @@ const OfferGPT = ({ baseUrl }) => {
   //====================================================================================================
   //Organize Messages into clear paragraphs etc...
 
-  const organizeMessages = (messages) => {
-    if (messages.length === 0) {
-      return [];
-    }
-  };
+  // const organizeMessages = (messages) => {
+  //   if (messages.length === 0) {
+  //     return [];
+  //   }
+  // };
 
   //====================================================================================================
   //Handle Clear Chat

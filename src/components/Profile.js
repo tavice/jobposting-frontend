@@ -60,7 +60,7 @@ const Profile = ({ baseUrl }) => {
     };
 
     fetchUserData();
-  }, []);
+  }, [baseUrl]);
 
   //=======================================================//
   //Delete user
@@ -77,10 +77,10 @@ const Profile = ({ baseUrl }) => {
 
   //=======================================================//
   //Style for the list
-  const style = {
-    width: "100%",
-    bgcolor: "background.paper",
-  };
+  // const style = {
+  //   width: "100%",
+  //   bgcolor: "background.paper",
+  // };
 
   //=======================================================//
   //render//

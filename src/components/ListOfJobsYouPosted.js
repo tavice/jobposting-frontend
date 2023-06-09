@@ -25,7 +25,7 @@ const ListOfJobsYouPosted = ({ baseUrl }) => {
     };
 
     fetchCurrentUser();
-  }, []);
+  }, [baseUrl]);
 
   useEffect(() => {
     const fetchEmployer = async () => {
@@ -44,7 +44,7 @@ const ListOfJobsYouPosted = ({ baseUrl }) => {
     };
 
     fetchEmployer();
-  }, [currentUser]);
+  }, [baseUrl, currentUser]);
 
   useEffect(() => {
     const fetchJobListings = async () => {
@@ -58,7 +58,7 @@ const ListOfJobsYouPosted = ({ baseUrl }) => {
     };
 
     fetchJobListings();
-  }, []);
+  }, [baseUrl]);
 
   useEffect(() => {
     const filteredJobListings = jobListings.filter(

@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Container from "@mui/material/Container";
-import { Button, Typography, Grid, Paper, Divider, CircularProgress } from "@mui/material";
+import {  Typography, Grid, Paper, Divider, CircularProgress } from "@mui/material";
 import Paid from "@mui/icons-material/Paid";
 import LocationOn from "@mui/icons-material/LocationOn";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -16,20 +16,20 @@ const EmployerList = ({ baseUrl }) => {
 
   //=======================================================//
   // Fetching Employer List//
-  const fetchEmployerList = async () => {
+  const fetchEmployerList = useCallback( async () => {
     const response = await axios.get(`${baseUrl}/api/employers/?format=json`);
     const data = response.data;
     setEmployerList(data);
-  };
+  }, [baseUrl]);
 
   useEffect(() => {
     fetchEmployerList();
-  }, []);
+  }, [fetchEmployerList]);
 
   console.log(employerList);
   //=======================================================//
   // Fetching Job Listings//
-  const fetchJobListings = async () => {
+  const fetchJobListings = useCallback( async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/joblistings`);
 
@@ -40,7 +40,7 @@ const EmployerList = ({ baseUrl }) => {
       console.log(error);
       return [];
     }
-  };
+  }, [baseUrl]);
 
   //=======================================================//
   // once we have the job listings, we need to group them by employer
@@ -65,7 +65,7 @@ const EmployerList = ({ baseUrl }) => {
       
     };
     getJobListings();
-  }, []);
+  }, [fetchJobListings]);
 
   console.log("joblisting is ", jobListings);
 
@@ -73,26 +73,26 @@ const EmployerList = ({ baseUrl }) => {
   // Filtering Job Listings//
 
   const [filter, setFilter] = useState("");
-  const [filteredJobListings, setFilteredJobListings] = useState([]);
+  //const [filteredJobListings, setFilteredJobListings] = useState([]);
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
 
-  const handleFilterSubmit = (event) => {
-    event.preventDefault();
-    const filteredJobListings = Object.values(jobListings)
-      .flatMap((jobs) => jobs)
-      .filter((job) =>
-        job.jobtitle.toLowerCase().includes(filter.toLowerCase())
-      );
-    console.log("filtered joblisting is ", filteredJobListings);
-    setFilteredJobListings(filteredJobListings);
-  };
+  // const handleFilterSubmit = (event) => {
+  //   event.preventDefault();
+  //   const filteredJobListings = Object.values(jobListings)
+  //     .flatMap((jobs) => jobs)
+  //     .filter((job) =>
+  //       job.jobtitle.toLowerCase().includes(filter.toLowerCase())
+  //     );
+  //   console.log("filtered joblisting is ", filteredJobListings);
+  //   setFilteredJobListings(filteredJobListings);
+  // };
 
-  console.log("filtered joblisting is ", filteredJobListings);
+  // console.log("filtered joblisting is ", filteredJobListings);
 
-  console.log("filter is ", filter);
+  // console.log("filter is ", filter);
 
 
 

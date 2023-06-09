@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { CircularProgress, Typography, Grid, Paper, Button } from "@mui/material";
@@ -24,13 +24,13 @@ const JobListingDetail = ({ baseUrl }) => {
   const userType = localStorage.getItem("user_type");
   const jobSeekerId = localStorage.getItem("jobseeker_id");
   const employerId = localStorage.getItem("employer_id");
-  console.log(employerId)
+ // console.log(employerId)
 
 
   //====================================================================================================
   //fetch job listing
 
-  const fetchJobListing = async () => {
+  const fetchJobListing = useCallback( async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/joblistings/${id}`);
       const data = response.data;
@@ -38,13 +38,13 @@ const JobListingDetail = ({ baseUrl }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [baseUrl, id]);
 
   useEffect(() => {
     fetchJobListing();
-  }, []);
+  }, [fetchJobListing]);
 
-  const fetchEmployer = async () => {
+  const fetchEmployer = useCallback( async () => {
     try {
       const response = await axios.get(
         `${baseUrl}/api/employers/${jobListing.employer}`
@@ -55,15 +55,15 @@ const JobListingDetail = ({ baseUrl }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [baseUrl, jobListing.employer]);
 
   useEffect(() => {
     if (jobListing.employer) {
       fetchEmployer();
     }
-  }, [jobListing.employer]);
+  }, [fetchEmployer, jobListing.employer]);
 
-  console.log('employer id is ', employer.id)
+  //console.log('employer id is ', employer.id)
 
   //====================================================================================================
   //fetch current user
@@ -71,7 +71,7 @@ const JobListingDetail = ({ baseUrl }) => {
   const [currentUser, setCurrentUser] = useState({});
   
 
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUser = useCallback( async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/user/${userId}`);
       const data = response.data;
@@ -79,11 +79,11 @@ const JobListingDetail = ({ baseUrl }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [baseUrl, userId]);
 
   useEffect(() => {
     fetchCurrentUser();
-  }, [userId]);
+  }, [fetchCurrentUser]);
 
   //console.log(currentUser);
 
