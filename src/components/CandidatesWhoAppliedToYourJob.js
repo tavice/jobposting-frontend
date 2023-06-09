@@ -16,10 +16,10 @@ import TableRow from "@mui/material/TableRow";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 
-import SendIcon from "@mui/icons-material/Send";
+
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 
 const CandidatesWhoAppliedToYourJob = ({ baseUrl }) => {
   const [jobApplications, setJobApplications] = useState([]);

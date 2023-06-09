@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -18,7 +18,7 @@ const ListOfCandidatesYouLiked = ({ baseUrl }) => {
   // Use async/await with Promise.all() to make parallel API requests for faster data retrieval.
   //https://www.geeksforgeeks.org/explain-promise-all-with-async-await-in-javascript/
 
-  const fetchData = async () => {
+  const fetchData = useCallback( async () => {
     try {
       const [candidatesResponse, jobSeekersResponse, usersResponse] =
         await Promise.all([
@@ -44,11 +44,11 @@ const ListOfCandidatesYouLiked = ({ baseUrl }) => {
       setIsLoading(false);
       setError(error.message);
     }
-  };
+  }, [baseUrl, employerId]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   // Render
   if (isLoading) {

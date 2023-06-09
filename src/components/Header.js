@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import styled from "styled-components";
-import axios from "axios";
+
 
 //================================================================//
 //Material UI
@@ -10,8 +9,7 @@ import axios from "axios";
 import {
   Button,
   Typography,
-  Grid,
-  Paper,
+
   AppBar,
   Toolbar,
 } from "@mui/material";
@@ -30,29 +28,9 @@ const Header = ({ baseUrl }) => {
   const userName = localStorage.getItem("username");
   //================================================================//
   //Styled Components//
-  const StyledLink = styled(Link)`
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.5rem;
-    margin: 0 1rem;
-    &:hover {
-      color: #000;
-    }
-  `;
 
   //================================================================//
   //Get Cookie Function//
-  const getCookie = (name) => {
-    const cookies = document.cookie.split(";");
-    console.log(cookies);
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(name + "=")) {
-        return decodeURIComponent(cookie.substring(name.length + 1));
-      }
-    }
-    return null;
-  };
 
   //================================================================//
   //Logout Function//
@@ -100,8 +78,7 @@ const Header = ({ baseUrl }) => {
   //================================================================//
   //Nav Menu//
   const pages = ["Home", "Job Listings", "About Us", "Contact Us"];
-  const pagesLinks = ["/", "/job-listings", "/about-us", "/contact-us"];
-  const settings = ["My Dashboard", "Log Out"];
+
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

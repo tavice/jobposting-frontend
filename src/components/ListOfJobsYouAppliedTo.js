@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -7,95 +7,46 @@ import Chip from "@mui/material/Chip";
 
 const ListOfJobsYouAppliedTo = ({ baseUrl }) => {
   const [jobApplications, setJobApplications] = useState([]);
+  const [jobListings, setJobListings] = useState([]);
+  const [employers, setEmployers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const jobSeekerId = localStorage.getItem("jobseeker_id");
-  //console.log("jobSeekerId is ", jobSeekerId);
 
-  //=================================================================//
-  //fetch job applications associated with job seeker
-
-  const fetchJobApplications = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(`${baseUrl}/api/jobapplications`);
-      const data = response.data;
-      ////console.log("data is ", data);
+      const [jobApplicationResponse, jobListingsResponse, employersResponse] = await Promise.all([
+        axios.get(`${baseUrl}/api/jobapplications`),
+        axios.get(`${baseUrl}/api/joblistings`),
+        axios.get(`${baseUrl}/api/employers`)
+      ]);
 
-      const filteredListings = data.filter(
-        (item) => item.job_seeker === parseInt(jobSeekerId)
+      const jobApplicationsData = jobApplicationResponse.data.filter(
+        item => item.job_seeker === parseInt(jobSeekerId)
       );
-      setJobApplications(filteredListings);
+
+      const jobListingsData = jobListingsResponse.data.filter(listing =>
+        jobApplicationsData.some(application => application.job_listing === listing.id)
+      );
+
+      const employersData = employersResponse.data.filter(employer =>
+        jobListingsData.some(listing => listing.employer === employer.id)
+      );
+
+      setJobApplications(jobApplicationsData);
+      setJobListings(jobListingsData);
+      setEmployers(employersData);
       setIsLoading(false);
-      //console.log("filtered listings are ", filteredListings);
-      //console.log("job applications are ", jobApplications);
     } catch (error) {
       setError(error.message);
       setIsLoading(false);
     }
-  };
-
-  ////console.log("jobApplications are", jobApplications);
+  }, [baseUrl, jobSeekerId]);
 
   useEffect(() => {
-    fetchJobApplications();
-  }, []);
-
-  //=================================================================//
-  //fetch job listings associated with job applications
-
-  const [jobListings, setJobListings] = useState([]);
-
-  const fetchJobListings = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/api/joblistings`);
-      const data = response.data;
-      const filteredListings = data.filter((listing) =>
-        jobApplications.some(
-          (application) => application.job_listing === listing.id
-        )
-      );
-      setJobListings(filteredListings);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (jobApplications.length > 0) {
-      fetchJobListings();
-    }
-  }, [jobApplications]);
-
-  //console.log(jobListings);
-
-  //=================================================================//
-  //fetch employer associated with job listings
-
-  const [employers, setEmployers] = useState([]);
-
-  const fetchEmployers = async () => {
-    try {
-      const response = await axios.get(`${baseUrl}/api/employers`);
-      const data = response.data;
-      const filteredEmployers = data.filter((employer) =>
-        jobListings.some((listing) => listing.employer === employer.id)
-      );
-      setEmployers(filteredEmployers);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (jobListings.length > 0) {
-      fetchEmployers();
-    }
-  }, [jobListings]);
-
-  //console.log("employers are", employers);
-
-  //=================================================================//
+    fetchData();
+  }, [fetchData]);
 
   if (isLoading) {
     return <div>Loading...</div>;
