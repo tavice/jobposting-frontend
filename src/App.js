@@ -28,7 +28,7 @@ import CandidatePageDetail from "./pages/CandidatePageDetail";
 import UpdateJobOffer from "./pages/UpdateJobOffer";
 
 function App() {
-  const baseUrl = "https://jobposting-backend.herokuapp.com/";
+  const baseUrl = "https://jobposting-backend.herokuapp.com";
 
   return (
     <div className="App">
