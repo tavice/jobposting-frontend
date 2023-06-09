@@ -15,7 +15,7 @@ const FindCandidates = ({ baseUrl }) => {
   const [resume, setResume] = useState([]);
   const [filter, setFilter] = useState(""); // Filter state
 
-  const navigate = useNavigate();
+ 
 
   // Fetch all the job seekers, users, and resumes
   const fetchData = async () => {
