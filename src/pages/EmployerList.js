@@ -32,6 +32,8 @@ const EmployerList = ({ baseUrl }) => {
     }
   }, [baseUrl]);
 
+  console.log(employerList);
+
   const fetchJobListings = useCallback(async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/joblistings`);
