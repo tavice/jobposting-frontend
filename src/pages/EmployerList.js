@@ -32,8 +32,6 @@ const EmployerList = ({ baseUrl }) => {
     }
   }, [baseUrl]);
 
-  console.log(employerList);
-
   const fetchJobListings = useCallback(async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/joblistings`);
@@ -97,116 +95,122 @@ const EmployerList = ({ baseUrl }) => {
             />
           </div>
           {filteredJobListings.length > 0 ? (
-            filteredJobListings.map((jobListing) => (
-              <Grid
-                container
-                spacing={2}
-                style={{ alignItems: "center", margin: 0 }}
-                key={jobListing.id}
-              >
-                <Paper
-                  elevation={3}
-                  style={{
-                    width: "80%",
-                    alignItems: "center",
-                    padding: 20,
-                    margin: " auto",
-                    marginBottom: 40,
-                  }}
+            filteredJobListings.map((jobListing) => {
+              const employer = employerList.find(
+                (emp) => emp.id === jobListing.employer
+              );
+
+              return (
+                <Grid
+                  container
+                  spacing={2}
+                  style={{ alignItems: "center", margin: 0 }}
+                  key={jobListing.id}
                 >
-                  <Grid
-                    item
-                    xs={12}
-                    sm
-                    container
+                  <Paper
+                    elevation={3}
                     style={{
-                      justifyContent: "space-between",
-                      marginBottom: 20,
-                      marginTop: 20,
+                      width: "80%",
+                      alignItems: "center",
+                      padding: 20,
+                      margin: " auto",
+                      marginBottom: 40,
                     }}
                   >
-                    <Typography variant="h3" gutterBottom>
-                      {jobListing.companyname}
-                    </Typography>
-                    <div style={{ justifyContent: "center" }}>
-                      <img
-                        src={jobListing.logo}
-                        alt="Company Logo"
-                        height={100}
-                      />
-                    </div>
-                    <Typography variant="body1" gutterBottom>
-                      <LanguageIcon />{" "}
-                      <a
-                        href={jobListing.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {jobListing.website}
-                      </a>
-                    </Typography>
-                    <Typography variant="body1">
-                      <LocationOn /> {jobListing.location}{" "}
-                    </Typography>
-                  </Grid>
-                  <Divider style={{ height: 5 }} />
-                  <Typography
-                    variant="h4"
-                    style={{ marginBottom: 40, marginTop: 40 }}
-                  >
-                    Open Roles:{" "}
-                  </Typography>
-                  {jobListings[jobListing.id] &&
-                  jobListings[jobListing.id].length > 0 ? (
-                    jobListings[jobListing.id].map((job) => (
-                      <Paper
-                        elevation={3}
-                        style={{
-                          width: "80%",
-                          alignItems: "center",
-                          padding: 20,
-                          margin: "auto",
-                          marginBottom: 20,
-                        }}
-                        key={job.id}
-                      >
-                        <Typography
-                          variant="h5"
-                          style={{ marginBottom: 20 }}
+                    <Grid
+                      item
+                      xs={12}
+                      sm
+                      container
+                      style={{
+                        justifyContent: "space-between",
+                        marginBottom: 20,
+                        marginTop: 20,
+                      }}
+                    >
+                      <Typography variant="h3" gutterBottom>
+                        {employer.companyname}
+                      </Typography>
+                      <div style={{ justifyContent: "center" }}>
+                        <img
+                          src={employer.logo}
+                          alt="Company Logo"
+                          height={100}
+                        />
+                      </div>
+                      <Typography variant="body1" gutterBottom>
+                        <LanguageIcon />{" "}
+                        <a
+                          href={employer.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          <Link to={`/Job Listings/${job.id}`}>
-                            {job.jobtitle}
-                          </Link>
-                        </Typography>
-
-                        <Stack
-                          direction="row"
-                          useFlexGap
-                          flexWrap="wrap"
-                          spacing={1}
-                          style={{ padding: 20 }}
-                        >
-                          <Chip icon={<LocationOn />} label={job.location} />
-                          <Chip icon={<Paid />} label={job.salary} />
-                          <Chip
-                            icon={<PsychologyIcon />}
-                            label={job.jobrequirements}
-                          />
-                        </Stack>
-
-                        <Typography variant="body1">
-                          <strong>Description:</strong> {job.description}
-                        </Typography>
-                      </Paper>
-                    ))
-                  ) : (
-                    <Typography variant="body1">
-                      No job listings found.
+                          {employer.website}
+                        </a>
+                      </Typography>
+                      <Typography variant="body1">
+                        <LocationOn /> {employer.location}{" "}
+                      </Typography>
+                    </Grid>
+                    <Divider style={{ height: 5 }} />
+                    <Typography
+                      variant="h4"
+                      style={{ marginBottom: 40, marginTop: 40 }}
+                    >
+                      Open Roles:{" "}
                     </Typography>
-                  )}
-                </Paper>
-              </Grid>
-            ))
+                    {jobListings[jobListing.id] &&
+                    jobListings[jobListing.id].length > 0 ? (
+                      jobListings[jobListing.id].map((job) => (
+                        <Paper
+                          elevation={3}
+                          style={{
+                            width: "80%",
+                            alignItems: "center",
+                            padding: 20,
+                            margin: "auto",
+                            marginBottom: 20,
+                          }}
+                          key={job.id}
+                        >
+                          <Typography
+                            variant="h5"
+                            style={{ marginBottom: 20 }}
+                          >
+                            <Link to={`/Job Listings/${job.id}`}>
+                              {job.jobtitle}
+                            </Link>
+                          </Typography>
+
+                          <Stack
+                            direction="row"
+                            useFlexGap
+                            flexWrap="wrap"
+                            spacing={1}
+                            style={{ padding: 20 }}
+                          >
+                            <Chip icon={<LocationOn />} label={job.location} />
+                            <Chip icon={<Paid />} label={job.salary} />
+                            <Chip
+                              icon={<PsychologyIcon />}
+                              label={job.jobrequirements}
+                            />
+                          </Stack>
+
+                          <Typography variant="body1">
+                            <strong>Description:</strong> {job.description}
+                          </Typography>
+                        </Paper>
+                      ))
+                    ) : (
+                      <Typography variant="body1">
+                        No job listings found.
+                      </Typography>
+                    )}
+                  </Paper>
+                </Grid>
+              );
+            })
           ) : (
             <Typography variant="body1">No job listings found.</Typography>
           )}
