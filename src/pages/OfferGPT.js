@@ -1,107 +1,63 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, Typography,  Paper } from "@mui/material";
+import { Button, Typography, Paper } from "@mui/material";
 import Container from "@mui/material/Container";
-
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
-import SendIcon from '@mui/icons-material/Send';
+import SendIcon from "@mui/icons-material/Send";
 
 const OfferGPT = ({ baseUrl }) => {
   const [messages, setMessages] = useState([]);
   const [prompt, setPrompt] = useState("");
   const [temperature, setTemperature] = useState(0.1);
-  const [loading, setLoading] = useState(false); // Add loading state
-
-  //console.log(`baseUrl: ${baseUrl}`);
-  //const history = useHistory();
-
-  //====================================================================================================
-  //Handle Submit
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true); // Set loading state to true
-    console.log(`prompt: ${prompt}`);
-    console.log(`temperature: ${temperature}`);
+    setLoading(true);
 
     try {
-      // Construct the request payload
       const body = {
         prompt,
         temperature,
       };
 
-      console.log(body);
-      console.log(`payload: ${JSON.stringify(body)}`);
-
-      // Send a POST request to your API endpoint
       const response = await axios.post(`${baseUrl}/generator/chat/`, body);
 
       if (response.status === 200) {
-        // Access the response data
         const data = response.data;
-        const { messages:  formattedResponse } = data;
+        const { messages: formattedResponse } = data;
 
-        // Update the messages state with the updated messages
         setMessages((prevMessages) => {
           if (Array.isArray(prevMessages)) {
             return [
               ...prevMessages,
-              { role: "assistant", content: formattedResponse },
+              { role: "assistant", content: formattedResponse.content },
             ];
           }
-          return [{ role: "assistant", content: formattedResponse }];
+          return [{ role: "assistant", content: formattedResponse.content }];
         });
       }
     } catch (error) {
       console.error("Error:", error);
-      // Handle the error as needed
     } finally {
-      setLoading(false); // Set loading state to false after response is received
+      setLoading(false);
     }
   };
-
-  console.log("messages: ", messages);
-
-  //====================================================================================================
-  //Handle Prompt Change
 
   const handlePromptChange = (event) => {
     setPrompt(event.target.value);
   };
 
-  console.log("prompt: ", prompt);
-
-  //====================================================================================================
-  //Handle Temperature Change
-
   const handleTemperatureChange = (event) => {
     setTemperature(parseFloat(event.target.value));
   };
-
-  console.log("temperature: ", temperature);
-
-  //====================================================================================================
-  //Organize Messages into clear paragraphs etc...
-
-  // const organizeMessages = (messages) => {
-  //   if (messages.length === 0) {
-  //     return [];
-  //   }
-  // };
-
-  //====================================================================================================
-  //Handle Clear Chat
 
   const handleClearChat = (event) => {
     setMessages([]);
     setPrompt("");
     setTemperature(0.1);
   };
-
-  //====================================================================================================
-  //Render
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -140,7 +96,7 @@ const OfferGPT = ({ baseUrl }) => {
         />
         <Button type="submit" style={{ width: "50%" }} endIcon={<SendIcon />}>
           {loading ? (
-            <CircularProgress size={20} color="secondary" /> // Show spinner while loading
+            <CircularProgress size={20} color="secondary" />
           ) : (
             "GENERATE"
           )}
