@@ -82,7 +82,7 @@ const EmployerList = ({ baseUrl }) => {
         <>
           <Typography
             variant="h2"
-            style={{ marginBottom: 20, alignItems: "center" }}
+            style={{ marginBottom: 40, alignItems: "center" }}
           >
             Current Jobs Available
           </Typography>

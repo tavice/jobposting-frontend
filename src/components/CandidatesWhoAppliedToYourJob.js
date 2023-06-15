@@ -117,7 +117,7 @@ const CandidatesWhoAppliedToYourJob = ({ baseUrl }) => {
           : application
       );
       setJobApplications(updatedApplications);
-      window.location.href = "/Dashboard";
+      window.location.pathname = "/Dashboard";
     } catch (error) {
       console.log(error);
     }

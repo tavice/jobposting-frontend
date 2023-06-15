@@ -129,7 +129,7 @@ const saveJob = async () => {
     console.log(response.data);
     
 
-    window.href = "/dashboard"
+    window.location.pathname= "/dashboard"
   } catch (error) {
     console.log(error);
   
@@ -147,7 +147,7 @@ const deleteJob = async () => {
 
     console.log(response.data);
     console.log('job deleted')  
-    window.href = "/dashboard"
+    window.location.pathname = "/dashboard"
   } catch (error) {
     console.log(error);
   

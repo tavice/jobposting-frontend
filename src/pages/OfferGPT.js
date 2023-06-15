@@ -72,14 +72,14 @@ const OfferGPT = ({ baseUrl }) => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" style={{ marginBottom: 10 }}>
+      <Typography variant="h4" style={{ margin: 40 }}>
         JobGPT your Assistant to create amazing job descriptions
       </Typography>
 
-      <div className="chat-history">
+      <Paper className="chat-history" style={{ margin: 40, padding:40 }}>
         {messages.map((message, index) => (
           <Paper
-            style={{ padding: 40 }}
+            style={{ padding: 20 }}
             key={index}
             className="answer-discussion"
           >
@@ -88,11 +88,16 @@ const OfferGPT = ({ baseUrl }) => {
             </Paper>
           </Paper>
         ))}
-      </div>
+      </Paper>
 
       <form
         onSubmit={handleSubmit}
-        style={{ display: "flex", padding: 20, marginTop: 20 }}
+        style={{ display: "flex", 
+        padding: 20, 
+        marginTop: 20,
+        border: "4px solid white",
+        borderRadius: 10,
+       }}
       >
         <TextField
           required
