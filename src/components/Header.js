@@ -71,7 +71,7 @@ const Header = ({ baseUrl }) => {
       localStorage.removeItem("user_type");
       localStorage.removeItem("");
       console.log("User is logged out.");
-      window.location.href = "/Home";
+      window.location.pathname = "/Home";
     }
   };
 
@@ -124,7 +124,7 @@ const Header = ({ baseUrl }) => {
             variant="h5"
             noWrap
             component="a"
-            href="/Home"
+            to="/Home"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -194,7 +194,7 @@ const Header = ({ baseUrl }) => {
             variant="h5"
             noWrap
             component="a"
-            href="/Home"
+            to="/Home"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
