@@ -67,6 +67,8 @@ const EmployerList = ({ baseUrl }) => {
     setFilter(event.target.value);
   };
 
+  console.log(jobListings);
+
   const filteredJobListings = Object.values(jobListings)
     .flat()
     .filter((jobListing) =>
