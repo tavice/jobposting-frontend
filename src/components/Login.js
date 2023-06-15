@@ -41,8 +41,7 @@ const Login = ({ baseUrl }) => {
         localStorage.setItem("jobseeker_id", data.data.jobseeker_id);
         localStorage.setItem("employer_id", data.data.employer_id);
         localStorage.setItem("token", data.token);
-        //navigate("/Home");
-        window.location.href = "/Home";
+        window.location.pathname = "/Home"; // Use window.location.pathname for redirect in netlify
       }
     } catch (err) {
       console.error(err);
