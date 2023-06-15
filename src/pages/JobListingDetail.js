@@ -153,6 +153,11 @@ const deleteJob = async () => {
   
   }
 }
+
+//Back to job listings
+const backToJobListings = () => {
+  navigate("/Job Listings");
+}
   
 
 
@@ -217,7 +222,7 @@ const deleteJob = async () => {
             <Button variant="contained" color="secondary" style={{marginTop:'20%'}} onClick ={saveJob}>
             <FavoriteBorderIcon/>  Save for later
             </Button>
-            <Button variant="contained" color="primary" href="/Job Listings" style={{marginTop:'20%'}}>
+            <Button variant="contained" color="primary" style={{marginTop:'20%'}} onClick={backToJobListings}>
             <KeyboardReturnIcon/> Back to Job Listings
             </Button>
             
