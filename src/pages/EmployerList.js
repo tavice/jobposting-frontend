@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Container from "@mui/material/Container";
@@ -36,20 +36,6 @@ const EmployerList = ({ baseUrl }) => {
     try {
       const response = await axios.get(`${baseUrl}/api/joblistings`);
       const data = response.data;
-      return data;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-  }, [baseUrl]);
-
-  useEffect(() => {
-    fetchEmployerList();
-  }, [fetchEmployerList]);
-
-  useEffect(() => {
-    const getJobListings = async () => {
-      const data = await fetchJobListings();
       const jobListings = data.reduce((acc, job) => {
         if (!acc[job.employer]) {
           acc[job.employer] = [];
@@ -57,23 +43,36 @@ const EmployerList = ({ baseUrl }) => {
         acc[job.employer].push(job);
         return acc;
       }, {});
-      setJobListings(jobListings);
+      return jobListings;
+    } catch (error) {
+      console.log(error);
+      return {};
+    }
+  }, [baseUrl]);
+
+  useEffect(() => {
+    const getJobListings = async () => {
+      const data = await fetchJobListings();
+      setJobListings(data);
       setIsLoading(false);
     };
+    fetchEmployerList();
     getJobListings();
-  }, [fetchJobListings]);
+  }, [fetchEmployerList, fetchJobListings]);
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
 
-  console.log(jobListings);
-
-  const filteredJobListings = Object.values(jobListings)
-    .flat()
-    .filter((jobListing) =>
-      jobListing.jobtitle.toLowerCase().includes(filter.toLowerCase())
+  const filteredEmployers = employerList.filter((employer) => { //filtering through the employers and then within the employers, filtering through the job listings
+    const jobListingsByEmployer = jobListings[employer.id];
+    if (!jobListingsByEmployer) return false;
+    return jobListingsByEmployer.some((job) =>
+      job.jobtitle.toLowerCase().includes(filter.toLowerCase())
     );
+  });
+
+
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -96,74 +95,73 @@ const EmployerList = ({ baseUrl }) => {
               onChange={handleFilterChange}
             />
           </div>
-          {filteredJobListings.length > 0 ? (
-            filteredJobListings.map((jobListing) => {
-              const employer = employerList.find(
-                (emp) => emp.id === jobListing.employer
-              );
-
-              return (
-                <Grid
-                  container
-                  spacing={2}
-                  style={{ alignItems: "center", margin: 0 }}
-                  key={jobListing.id}
+          {filteredEmployers.length > 0 ? (
+            filteredEmployers.map((employer) => (
+              <Grid
+                container
+                spacing={2}
+                style={{ alignItems: "center", margin: 0 }}
+                key={employer.id}
+              >
+                <Paper
+                  elevation={3}
+                  style={{
+                    width: "80%",
+                    alignItems: "center",
+                    padding: 20,
+                    margin: "auto",
+                    marginBottom: 40,
+                  }}
                 >
-                  <Paper
-                    elevation={3}
+                  <Grid
+                    item
+                    xs={12}
+                    sm
+                    container
                     style={{
-                      width: "80%",
-                      alignItems: "center",
-                      padding: 20,
-                      margin: " auto",
-                      marginBottom: 40,
+                      justifyContent: "space-between",
+                      marginBottom: 20,
+                      marginTop: 20,
                     }}
                   >
-                    <Grid
-                      item
-                      xs={12}
-                      sm
-                      container
-                      style={{
-                        justifyContent: "space-between",
-                        marginBottom: 20,
-                        marginTop: 20,
-                      }}
-                    >
-                      <Typography variant="h3" gutterBottom>
-                        {employer.companyname}
-                      </Typography>
-                      <div style={{ justifyContent: "center" }}>
-                        <img
-                          src={employer.logo}
-                          alt="Company Logo"
-                          height={100}
-                        />
-                      </div>
-                      <Typography variant="body1" gutterBottom>
-                        <LanguageIcon />{" "}
-                        <a
-                          href={employer.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {employer.website}
-                        </a>
-                      </Typography>
-                      <Typography variant="body1">
-                        <LocationOn /> {employer.location}{" "}
-                      </Typography>
-                    </Grid>
-                    <Divider style={{ height: 5 }} />
-                    <Typography
-                      variant="h4"
-                      style={{ marginBottom: 40, marginTop: 40 }}
-                    >
-                      Open Roles:{" "}
+                    <Typography variant="h3" gutterBottom>
+                      {employer.companyname}
                     </Typography>
-                    {jobListings[jobListing.id] &&
-                    jobListings[jobListing.id].length > 0 ? (
-                      jobListings[jobListing.id].map((job) => (
+                    <div style={{ justifyContent: "center" }}>
+                      <img
+                        src={employer.logo}
+                        alt="Company Logo"
+                        height={100}
+                      />
+                    </div>
+                    <Typography variant="body1" gutterBottom>
+                      <LanguageIcon />{" "}
+                      <a
+                        href={employer.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {employer.website}
+                      </a>
+                    </Typography>
+                    <Typography variant="body1">
+                      <LocationOn /> {employer.location}{" "}
+                    </Typography>
+                  </Grid>
+                  <Divider style={{ height: 5 }} />
+                  <Typography
+                    variant="h4"
+                    style={{ marginBottom: 40, marginTop: 40 }}
+                  >
+                    Open Roles:{" "}
+                  </Typography>
+                  {jobListings[employer.id] &&
+                  jobListings[employer.id].length > 0 ? (
+                    jobListings[employer.id]
+                      .filter((job) =>
+                        job.jobtitle.toLowerCase().includes(filter.toLowerCase())
+                      )
+                      .map((job) => (
                         <Paper
                           elevation={3}
                           style={{
@@ -204,15 +202,14 @@ const EmployerList = ({ baseUrl }) => {
                           </Typography>
                         </Paper>
                       ))
-                    ) : (
-                      <Typography variant="body1">
-                        No job listings found.
-                      </Typography>
-                    )}
-                  </Paper>
-                </Grid>
-              );
-            })
+                  ) : (
+                    <Typography variant="body1">
+                      No job listings found.
+                    </Typography>
+                  )}
+                </Paper>
+              </Grid>
+            ))
           ) : (
             <Typography variant="body1">No job listings found.</Typography>
           )}

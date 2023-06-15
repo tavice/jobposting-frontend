@@ -106,10 +106,10 @@ const CandidatesWhoAppliedToYourJob = ({ baseUrl }) => {
         job_listing: applicationToUpdate.job_listing,
       });
 
-      console.log(
-        "applicationToUpdate.job_seeker",
-        applicationToUpdate.job_seeker
-      );
+      // console.log(
+      //   "applicationToUpdate.job_seeker",
+      //   applicationToUpdate.job_seeker
+      // );
       // Update the jobApplications state to reflect the updated status
       const updatedApplications = jobApplications.map((application) =>
         application.id === applicationId // Find the application that was updated and return it
@@ -141,10 +141,10 @@ const CandidatesWhoAppliedToYourJob = ({ baseUrl }) => {
         job_listing: applicationToUpdate.job_listing,
       });
 
-      console.log(
-        "applicationToUpdate.job_seeker",
-        applicationToUpdate.job_seeker
-      );
+      // console.log(
+      //   "applicationToUpdate.job_seeker",
+      //   applicationToUpdate.job_seeker
+      // );
       // Update the jobApplications state to reflect the updated feedback
       const updatedApplications = jobApplications.map((application) =>
         application.id === applicationId

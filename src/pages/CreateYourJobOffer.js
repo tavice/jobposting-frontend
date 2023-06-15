@@ -44,7 +44,7 @@ const NewJobListingForm = ({ baseUrl }) => {
     fetchEmployer();
   }, [baseUrl, employerId]);
 
-  console.log(employer);
+  
   //================================================================//
   // Creating a new job listing
   const handleFormSubmit = async (e) => {
