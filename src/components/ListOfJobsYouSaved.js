@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import { Paper } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const ListOfJobsYouSaved = ({ baseUrl }) => {
   const jobSeekerId = localStorage.getItem("jobseeker_id");
@@ -62,7 +64,7 @@ const ListOfJobsYouSaved = ({ baseUrl }) => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} style={{padding:2, display:'flex'}}>
       {jobListings.map((jobListing) => {
         const savedJob = jobSaved.find(
           (job) => job.job_listing === jobListing.id
@@ -78,14 +80,20 @@ const ListOfJobsYouSaved = ({ baseUrl }) => {
         const companyName = employer ? employer.companyname : "Unknown Company";
 
         return (
-          <Grid item xs={12} sm={4} md={4} key={jobListing.id} style={{padding:2}}>
-            <Stack direction="row" spacing={1} style={{ margin: 20}}>
-              <Typography>{jobListing.jobtitle}</Typography>
+          <Grid item xs={12} sm={5} md={5} key={jobListing.id} style={{padding:2, display:'flex'}}>
+            <Paper elevation={3} style={{width:'100%', padding:10}}>
+            <Stack 
+              direction="column" 
+              spacing={2} 
+              style={{
+                margin:20, justifyContent: 'space-between' }}>
+              <Typography component={Link} to={`/Job Listings/${jobListing?.id}`}> {jobListing.jobtitle}</Typography>
               <Chip label={jobListing.salary} />
               <Chip label={jobListing.location} />
-              <Chip label={savedDate} />
               <Chip label={companyName} />
+              <Chip label={savedDate} />
             </Stack>
+            </Paper>
           </Grid>
         );
       })}

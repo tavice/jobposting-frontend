@@ -108,7 +108,7 @@ const Dashboard = ({ baseUrl }) => {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={6} lg={7}>
+            <Grid item xs={12} md={6} lg={6}>
               <Paper
                 sx={{
                   p: 2,
@@ -125,7 +125,7 @@ const Dashboard = ({ baseUrl }) => {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={6} lg={5}>
+            <Grid item xs={12} md={6} lg={6} sx={{ width: '100%' }}>
               <Paper
                 sx={{
                   p: 2,
@@ -137,8 +137,8 @@ const Dashboard = ({ baseUrl }) => {
                 <Typography variant="h4" style={{ marginBottom: 10 }}>
                   {" "}
                   List of the jobs you saved
-                  <ListOfJobsYouSaved baseUrl={baseUrl} />
                 </Typography>
+                  <ListOfJobsYouSaved baseUrl={baseUrl} />
               </Paper>
             </Grid>
           </Grid>
