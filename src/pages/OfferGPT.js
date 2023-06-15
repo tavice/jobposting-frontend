@@ -22,7 +22,9 @@ const OfferGPT = ({ baseUrl }) => {
         temperature,
       };
 
-      const response = await axios.post(`${baseUrl}/generator/chat/`, body);
+      const response = await axios.post(`${baseUrl}/generator/chat/`, body, {
+        withCredentials: true, // Include session information
+      });
 
       if (response.status === 200) {
         const data = response.data;
@@ -32,16 +34,25 @@ const OfferGPT = ({ baseUrl }) => {
           if (Array.isArray(prevMessages)) {
             return [
               ...prevMessages,
-              { role: "assistant", content: formattedResponse.content },
+              ...formattedResponse.map((message) => ({
+                role: message.role,
+                content: message.content,
+              })),
             ];
           }
-          return [{ role: "assistant", content: formattedResponse.content }];
+          return [
+            ...formattedResponse.map((message) => ({
+              role: message.role,
+              content: message.content,
+            })),
+          ];
         });
       }
     } catch (error) {
       console.error("Error:", error);
     } finally {
       setLoading(false);
+      setPrompt(""); // Clear the prompt input field
     }
   };
 
@@ -78,6 +89,7 @@ const OfferGPT = ({ baseUrl }) => {
           </Paper>
         ))}
       </div>
+
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", padding: 20, marginTop: 20 }}
