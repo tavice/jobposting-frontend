@@ -1,71 +1,59 @@
-# Getting Started with Create React App
+# My JobSearch.com
+#### A full CRUD web app designed to connect the best jobseekers and employers!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
+* [Technologies Used](#technologiesused)
+* [Features](#features)
+* [Design](#design)
+* [Project Next Steps](#nextsteps)
+* [Deployed App](#deployment)
+* [About the Author](#author)
 
-## Available Scripts
+## <a name="technologiesused"></a>Technologies Used
+* JavaScript
+* React
+* Django
+* PostgreSQL
+* Heroku
+* OpenAI API
+* RESTful Routes
 
-In the project directory, you can run:
 
-### `npm start`
+## Features
+* Users can run full C.R.U.D. operation on the user/joblisting/employer/resume models
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Whiteboard Images
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## <a name="design"></a>Design
+* Design elements implemented using Bootstrap and CSS3
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## <a name="nextsteps"></a>Project Next Steps
+* Users will be able to upload their own profile pictures images (company logo for companies)
+* Users will be able to chat (internal chat between employer and jobseeker)
+* Send email/be notfied when somebody applies to your job or a recruiter likes your profile
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## <a name="deployment"></a>Deployed Link
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* [Frontend Netlifly ](https://main--astonishing-cannoli-1faecf.netlify.app/Home)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* You can view the repository:
+[Github.com](https://github.com/tavice/jobposting-frontend)
 
-## Learn More
+* If unable to view please go live locally through VS Code
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## <a name="author"></a>About The Author
+I build applications and mini projects tied to my various interests. I am trying to improve my daily activities by creating elegant code.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    
+## Works Cited:
+* N/A
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# jobposting-frontend
