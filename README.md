@@ -30,7 +30,7 @@
 
 
 ## <a name="design"></a>Design
-* Design elements implemented using Bootstrap and CSS3
+* Design elements implemented using CSS, materialUI library for icons
 
 
 ## <a name="nextsteps"></a>Project Next Steps
